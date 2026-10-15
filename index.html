@@ -252,6 +252,24 @@
       background: #17100d;
     }
     .video-stage video.playing { display: block; }
+    .video-tap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      display: none;
+      min-height: 48px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 1.4rem;
+      background: rgba(255, 250, 240, .92);
+      color: var(--red-dark);
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
+    }
+    .video-tap.show { display: block; }
     .ending-card {
       position: relative;
       width: min(560px, 100%);
@@ -418,6 +436,7 @@
   <!-- ★ 视频播放区：把两个视频放到 assets 文件夹，命名为 video-1.mp4 和 video-2.mp4 即可 -->
   <div class="video-stage" id="videoStage" aria-label="纪念视频">
     <video id="video1" src="assets/video1.mp4" playsinline webkit-playsinline x5-playsinline preload="metadata"></video>
+    <button class="video-tap" id="videoTap" type="button">轻触播放视频</button>
     <!-- <video id="video2" src="assets/video-2.mp4" playsinline preload="auto"></video> -->
   </div>
 
@@ -458,7 +477,7 @@
     const ending = document.getElementById('ending');
     const bgm = document.getElementById('bgm');
     const videoStage = document.getElementById('videoStage');
-    const videos = [document.getElementById('video1'), document.getElementById('video2')];
+    const videos = [document.getElementById('video1')];
     const AUTO_DELAY = reduceMotion ? 450 : 500;
     let current = 0;
     let locked = false;
@@ -545,19 +564,32 @@
     }
     function playVideo(i, done) {
       const video = videos[i];
+      const videoTap = document.getElementById('videoTap');
       let finished = false;
       const finish = () => {
         if (finished) return;
         finished = true;
         video.classList.remove('playing');
         video.pause();
+        videoTap.classList.remove('show');
         done();
       };
       video.addEventListener('ended', finish);
-      video.addEventListener('error', finish);
+      video.addEventListener('error', () => { console.warn('video error:', video.error); finish(); });
       video.classList.add('playing');
       video.currentTime = 0;
-      video.play().catch(finish);
+      // iOS/微信自动播放策略：延迟调用的带声音 play() 会被拒绝。
+      // 先静音启动（移动端一律放行），播放成功后立即恢复声音；
+      video.muted = true;
+      video.play().then(() => { video.muted = false; }).catch(() => {
+        // 极端情况仍被拒：显示"轻触播放"按钮，交给真实用户手势
+        videoTap.classList.add('show');
+      });
+      videoTap.onclick = () => {
+        videoTap.classList.remove('show');
+        video.muted = false;
+        video.play().catch(finish);
+      };
     }
     function randBetween(a, b) { return a + Math.random() * (b - a); }
     function flipParams() {
