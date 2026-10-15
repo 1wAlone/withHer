@@ -189,12 +189,14 @@
       background: rgba(255,250,240,.92);
       border-radius: 2px;
       box-shadow: 0 24px 70px rgba(53,37,29,.3);
+      display: none;
       visibility: hidden;
       opacity: 0;
       transform: translateX(70%) rotateY(62deg);
       transform-origin: left center;
     }
     .page.active {
+      display: block;
       visibility: visible;
       opacity: 1;
       transform: none;
@@ -425,11 +427,11 @@
     </section>
   </main>
 
-  <audio id="bgm" src="assets/birthday-music.wav" loop preload="auto" data-page-node-id="4MWF2mMAVLMOTXrBZOB9ie"></audio>
+  <audio id="bgm" src="assets/birthday-music.wav" loop preload="metadata" data-page-node-id="4MWF2mMAVLMOTXrBZOB9ie"></audio>
 
   <!-- ★ 视频播放区：把两个视频放到 assets 文件夹，命名为 video-1.mp4 和 video-2.mp4 即可 -->
   <div class="video-stage" id="videoStage" aria-label="纪念视频">
-    <video id="video1" src="assets/video1.mp4" playsinline webkit-playsinline x5-playsinline preload="auto"></video>
+    <video id="video1" src="assets/video1.mp4" playsinline webkit-playsinline x5-playsinline preload="metadata"></video>
     <!-- <video id="video2" src="assets/video-2.mp4" playsinline preload="auto"></video> -->
   </div>
 
@@ -480,9 +482,8 @@
     const pageImgs = pages.map(p => p.querySelector('img'));
     // 内存优化：默认不加载 74 张图，仅在需要时按需加载窗口内的图片，
     // 远离当前页的图片会释放 src 以回收内存，避免手机端内存峰值导致页面重载。
-    const WINDOW_AHEAD = 4;
-    const WINDOW_BEHIND = 2;
-    const KEEP_RANGE = 6;
+    const WINDOW_AHEAD = 2;
+    const WINDOW_BEHIND = 1;
     pageImgs.forEach((im) => {
       if (im && !im.dataset.src) {
         im.dataset.src = im.getAttribute('src');
@@ -499,7 +500,8 @@
     }
     function trimMemory(center) {
       pageImgs.forEach((im, i) => {
-        if (im && im.dataset.loaded && Math.abs(i - center) > KEEP_RANGE) {
+        const inWindow = i >= center - WINDOW_BEHIND && i <= center + WINDOW_AHEAD;
+        if (im && im.dataset.loaded && !inWindow) {
           im.removeAttribute('src');
           delete im.dataset.loaded;
         }
