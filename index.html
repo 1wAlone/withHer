@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="KgAS79BrKKvWlhVtwhe5pc">
+<head data-page-node-id="dd2IBaAbHeMz1sMFMQimGm">
+  <meta charset="UTF-8" data-page-node-id="zCK4Osv8rDvBAgIGLNe45p">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" data-page-node-id="VzyutU8MrEEkBdcxvhogoX">
+  <title>祝你生日快乐</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f3e4cd'/%3E%3Cpath d='M18 34c0-9 6-16 14-16s14 7 14 16z' fill='%23b84d43'/%3E%3Cpath d='M32 18c-2-6 1-10 4-12' stroke='%23684a35' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='36' cy='5' r='3' fill='%23d9a441'/%3E%3Cpath d='M17 36h30l-3 18H20z' fill='%23f8efe2'/%3E%3C/svg%3E" data-page-node-id="KMomNp1TxI8NRLySXGomRg">
+  <style>
+    :root {
+      --paper: #f4ead8;
+      --paper-soft: #fff8ec;
+      --ink: #35251d;
+      --muted: #806958;
+      --red: #a9443b;
+      --red-dark: #7f302b;
+      --gold: #c99845;
+      --night: #211611;
+      --serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      --sans: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(255,215,145,.35), transparent 22rem),
+        radial-gradient(circle at 12% 82%, rgba(169,68,59,.12), transparent 20rem),
+        linear-gradient(180deg, #f8efe1, #e7d4b8);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      opacity: .14;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+    }
+    button { font-family: inherit; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    .opening {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      min-height: 100svh;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+      color: #fff5e6;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(255,211,137,.20), transparent 16rem),
+        radial-gradient(circle at 50% 72%, rgba(169,68,59,.18), transparent 22rem),
+        linear-gradient(180deg, #2b1c15 0%, #17100d 100%);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+    .opening.leaving { opacity: 0; transform: scale(1.04); pointer-events: none; }
+    .opening-inner { width: min(760px, 100%); text-align: center; padding: 2rem 0; }
+    .cake-wrap {
+      opacity: 0;
+      transform: translateY(24px) scale(.92);
+      transition: opacity 1.6s ease, transform 1.6s cubic-bezier(.22,1,.36,1);
+    }
+    .cake-wrap.show { opacity: 1; transform: none; }
+    .cake-wrap.done { margin-bottom: -1.25rem; }
+    .cake-wrap.done .cake { width: min(132px, 34vw); }
+    .cake-wrap.done .countdown { display: none; }
+    .cake { width: min(230px, 58vw); display: block; margin: 0 auto; filter: drop-shadow(0 24px 34px rgba(0,0,0,.35)); transition: width .9s ease; }
+    .flame { opacity: 0; transform-origin: 50% 72%; }
+    .flame.lit { opacity: 1; animation: flicker .82s ease-in-out infinite alternate; }
+    .flame.out { animation: smoke .9s ease forwards; }
+    @keyframes flicker { from { transform: rotate(-5deg) scale(.94); } to { transform: rotate(5deg) scale(1.08); } }
+    @keyframes smoke { 0% { opacity: 1; transform: translateY(0) scale(1); } 45% { opacity: .7; transform: translateY(-8px) scale(.9); } 100% { opacity: 0; transform: translateY(-18px) scale(.5); } }
+    .smoke { opacity: 0; }
+    .smoke.show { opacity: .72; animation: smoke-rise 1.5s ease forwards; }
+    @keyframes smoke-rise { from { opacity: 0; transform: translateY(6px); } 30% { opacity: .65; } to { opacity: 0; transform: translateY(-16px); } }
+    .countdown {
+      width: 42px;
+      height: 42px;
+      margin: 12px auto 0;
+      border: 1px solid rgba(255,235,200,.38);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #ffe2ad;
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      opacity: .8;
+    }
+    .birthday-title {
+      display: none;
+      font-family: var(--serif);
+      font-size: clamp(2.7rem, 9vw, 6.4rem);
+      line-height: 1.1;
+      margin: 1.1rem 0 .4rem;
+      text-shadow: 0 10px 35px rgba(0,0,0,.4);
+    }
+    .birthday-title.show { display: block; animation: fade-up 1.4s ease both; }
+    .birthday-sub {
+      display: none;
+      margin: 0 auto;
+      color: rgba(255,245,230,.78);
+      letter-spacing: .18em;
+      font-size: .9rem;
+    }
+    .birthday-sub.show { display: block; animation: fade-in 1.2s ease .15s both; }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+    .message-card {
+      display: none;
+      width: min(560px, 100%);
+      margin: 1.7rem auto 0;
+      padding: 14px;
+      border-radius: 26px;
+      background: rgba(255,248,236,.08);
+      border: 1px solid rgba(255,235,200,.16);
+      box-shadow: 0 28px 70px rgba(0,0,0,.28);
+      text-align: left;
+    }
+    .message-card.show { display: block; animation: fade-up 1.35s cubic-bezier(.22,1,.36,1) both; }
+    .message-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 6px 12px;
+      color: rgba(255,245,230,.72);
+      font-size: .86rem;
+    }
+    .message-dot { width: 9px; height: 9px; border-radius: 50%; background: #86b983; box-shadow: 0 0 0 4px rgba(134,185,131,.12); }
+    .chat-bubble {
+      background: #fff8ec;
+      color: #3d2c22;
+      border-radius: 4px 22px 22px 22px;
+      padding: 18px 18px 16px;
+      line-height: 1.95;
+      font-size: clamp(.96rem, 2.2vw, 1.04rem);
+      box-shadow: 0 14px 35px rgba(0,0,0,.18);
+    }
+    .chat-bubble p { margin: 0 0 .85rem; }
+    .chat-bubble p:last-child { margin-bottom: 0; }
+    .open-album {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff8ec;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(169,68,59,.32);
+      transition: transform .25s ease, background .25s ease;
+    }
+    .open-album:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+    main { display: none; }
+    .album-stage {
+      width: 100%;
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transition: opacity .9s ease;
+    }
+    .album-stage.show { opacity: 1; }
+    .book {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      perspective: 1600px;
+      padding: 0;
+    }
+    .page {
+      position: absolute;
+      z-index: 2;
+      width: min(92vw, 980px);
+      margin: 0;
+      padding: 10px;
+      background: rgba(255,250,240,.92);
+      border-radius: 2px;
+      box-shadow: 0 24px 70px rgba(53,37,29,.3);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(70%) rotateY(62deg);
+      transform-origin: left center;
+    }
+    .page.active {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      z-index: 5;
+      transition: transform .62s cubic-bezier(.22,1,.36,1), opacity .62s ease;
+    }
+    .page img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      min-height: 40vh;
+      max-height: 86svh;
+      margin: 0 auto;
+      object-fit: contain;
+      background: #eadcc8;
+      backface-visibility: hidden;
+      filter: sepia(.06) saturate(.98);
+    }
+    .page figcaption { display: none; }
+
+    .ending {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(33,22,17,.82);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .55s ease;
+    }
+    .ending.show { opacity: 1; pointer-events: auto; }
+    .video-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      opacity: 0;
+      visibility: hidden;
+      background: #17100d;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+    .video-stage.show { opacity: 1; visibility: visible; }
+    .video-stage video {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: #17100d;
+    }
+    .video-stage video.playing { display: block; }
+    .ending-card {
+      position: relative;
+      width: min(560px, 100%);
+      padding: clamp(1.6rem, 5vw, 2.6rem);
+      border-radius: 24px;
+      background: var(--paper-soft);
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0,0,0,.4);
+      transform: translateY(18px) scale(.96);
+      transition: transform .55s cubic-bezier(.22,1,.36,1);
+    }
+    .ending.show .ending-card { transform: none; }
+    .ending-card h2 { font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 2.8rem); margin: 0 0 1rem; }
+    .ending-card p { color: var(--muted); line-height: 2; margin: 0; }
+    .ending-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(53,37,29,.08);
+      color: var(--ink);
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background .25s ease;
+    }
+    .ending-close:hover { background: rgba(53,37,29,.16); }
+    @media (max-width: 560px) {
+      .opening {
+        padding:
+          calc(18px + env(safe-area-inset-top))
+          calc(14px + env(safe-area-inset-right))
+          calc(18px + env(safe-area-inset-bottom))
+          calc(14px + env(safe-area-inset-left));
+      }
+      .album-stage { padding: 0; }
+      .book { min-height: 100svh; }
+      .page { width: 94vw; padding: 6px; }
+      .page img { max-height: 82svh; }
+      .chat-bubble { padding: 15px; }
+      .ending {
+        padding:
+          calc(24px + env(safe-area-inset-top))
+          calc(24px + env(safe-area-inset-right))
+          calc(24px + env(safe-area-inset-bottom))
+          calc(24px + env(safe-area-inset-left));
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body data-page-node-id="bEG9JNvD25lNpojAeWOajT">
+  <div class="opening" id="opening" data-page-node-id="EOXvcrahbOCCJ9yEGyJPsG">
+    <div class="opening-inner" data-page-node-id="rtV5RIFLx8jxvhi2EVjOKK">
+      <div class="cake-wrap" id="cakeWrap" data-page-node-id="WgCMI67MF77wrKEgO9vkHq">
+        <svg class="cake" viewBox="0 0 180 220" role="img" aria-label="生日蛋糕" data-page-node-id="chRiOXJoYbhbkoFHWvBlKa">
+          <g class="candle-flames" data-page-node-id="HfOqcFkvRdvUo2QPYtGCvE">
+            <g data-page-node-id="gV2aUNWfT3O6cqXwJACmtD"><g class="flame f1" data-page-node-id="6PC52QmNiDG4EylCsf6ReR"><path d="M69 27c7 10 8 17 4 24-5 8-15 6-16-3-1-8 5-14 12-21z" fill="#f2b84b" data-page-node-id="3DPXxHt8RzQfcgzCbAnkee"/><path d="M68 37c2 5 3 8 1 12-3 4-8 2-8-2 0-4 3-7 7-10z" fill="#fff1a8" data-page-node-id="F3L48JQCvDY8gUs1nRYZ2j"/></g><path class="smoke s1" d="M69 22c-6-6 6-9 0-16" stroke="#d8c8b7" stroke-width="2" fill="none" stroke-linecap="round" data-page-node-id="YfaAWFWNwuBJUm2pDf2ths"/><path d="M66 50h6v30h-6z" fill="#f6dfbd" data-page-node-id="DKH4hyIfIzatV0ktBzPo7W"/></g>
+            <g data-page-node-id="eGKuTKDlB6ADtJAHNIF3XD"><g class="flame f2" data-page-node-id="jrFdHV6eFW6GZABoDVkAt0"><path d="M90 17c7 10 8 17 4 24-5 8-15 6-16-3-1-8 5-14 12-21z" fill="#f2b84b" data-page-node-id="wXV1mck2817j5oYLRbnUmI"/><path d="M89 27c2 5 3 8 1 12-3 4-8 2-8-2 0-4 3-7 7-10z" fill="#fff1a8" data-page-node-id="LnhKDVFqigkVYWYqFz7zJi"/></g><path class="smoke s2" d="M90 12c-6-6 6-9 0-16" stroke="#d8c8b7" stroke-width="2" fill="none" stroke-linecap="round" data-page-node-id="FF9ziLBrmI5MXzA49jDb7O"/><path d="M87 40h6v40h-6z" fill="#b84d43" data-page-node-id="J76DUo4vMKxj0yhkxxQ12t"/></g>
+            <g data-page-node-id="5PYPAz0DZAX88AJFM8SDnT"><g class="flame f3" data-page-node-id="7x3b2PKLgH8P5YJDDrCEZp"><path d="M111 27c7 10 8 17 4 24-5 8-15 6-16-3-1-8 5-14 12-21z" fill="#f2b84b" data-page-node-id="aHC4ZV997xB6mJ2Gm4SnuE"/><path d="M110 37c2 5 3 8 1 12-3 4-8 2-8-2 0-4 3-7 7-10z" fill="#fff1a8" data-page-node-id="ASU79StiS28jbnaKXzjEpA"/></g><path class="smoke s3" d="M111 22c-6-6 6-9 0-16" stroke="#d8c8b7" stroke-width="2" fill="none" stroke-linecap="round" data-page-node-id="kOdCOcDm9qPWDMC9qDl8dB"/><path d="M108 50h6v30h-6z" fill="#f6dfbd" data-page-node-id="kKGj2n2vuoc1lC9ERgA5jr"/></g>
+          </g>
+          <path d="M42 83h96c6 0 11 5 11 11v19H31v-19c0-6 5-11 11-11z" fill="#b84d43" data-page-node-id="8vfiUCsuFBPo990xKZr5Do"/>
+          <path d="M31 113h118v72c0 9-7 16-16 16H47c-9 0-16-7-16-16z" fill="#fff8ec" data-page-node-id="jKBjNfJkgsX5GUcZhfim5T"/>
+          <path d="M31 137h118M47 113c0-9 15-9 15 0M64 113c0-9 15-9 15 0M81 113c0-9 15-9 15 0M98 113c0-9 15-9 15 0M115 113c0-9 15-9 15 0" stroke="#c99845" stroke-width="4" fill="none" stroke-linecap="round" data-page-node-id="ioK7n7sJgWkRuNhxbolwXh"/>
+        </svg>
+        <div class="countdown" id="countdown" data-page-node-id="a3FsZFewHqAAgEFNMXlfFh">3</div>
+      </div>
+      <h1 class="birthday-title" id="birthdayTitle" data-page-node-id="Xuw0BSkU0gQELvvTLpUGr1">祝你生日快乐呀</h1>
+      <div class="birthday-sub" id="birthdaySub" data-page-node-id="4s7Km4vE3OFteBivIvB4WA">新的一岁，多喜乐长安宁</div>
+
+      <section class="message-card" id="messageCard" aria-label="生日留言" data-page-node-id="y8L3Fq970ACB4eDUWuto20">
+        <!-- <div class="message-head" data-page-node-id="oZmV8vPzC6OdNafFJfbfiE"><span class="message-dot" data-page-node-id="o6bqBx0sXTEchody7w2uBD"></span><span data-page-node-id="SqWDEIcAs9VQLCQhglwhPD">一条想认真发给你的消息</span></div> -->
+        <div class="chat-bubble" data-page-node-id="I15MQpdAyhBKKH0pWwQ0ae">
+          <!-- 想改留言，直接修改下面这几段文字即可 -->
+          <p data-page-node-id="qjUpxFDiL9YYAdlHDeC726">或许是早已预谋已久分离，连声招呼不打就走了，哈哈，还没来得及和你度过在一起的第一个生日。最近时常会想起我们在一起的日子，
+            想到之前是多么的美好，现在回头看看咱们的感情，挺感慨万千的，我们从第一次见面的那么生疏到两个人在对方面前都毫无顾忌。
+            你像个小孩子，调皮，喜欢闹小脾气。你生气的时候呢，我总是喜欢拉扯，我的想法是我爱你，但我要保持我的主体性，然后有时故意惹你生气，哈哈哈，我以为这样就能让咱俩的感情一直保持新鲜感，
+            我想掌握关系的主导权，但忘了是你迁就着我，我才能够这样子，我心里却觉得屡试不爽，后来演变成这样，或许是你真的感觉到疲惫了，我们之间琐碎的矛盾
+            反复出现，争吵后也还是会重蹈覆辙，下一次又因为类似的事情而争吵，周而复始。我在想或许我在咱们出现第一个矛盾的时候就做出让步，现在的结局会不会朝着更好的方向，但一切都已定局，
+            没有所谓的如果。谢谢你，你的出现打破了我原本平静的日子，和你在一起的时光我真的觉得很开心，我爱你。愿我们都有美好的未来，拥有强大的内心，自信，遇到困难，都有独挡一面的勇气。
+          </p>
+          <!-- <p data-page-node-id="OpLvn4uHXEJwHHQjUVEiXQ">愿你新的一岁，平安、开心、少烦恼；想去的地方都能到，想做的事都顺利，身边也一直有我。</p>
+          <p data-page-node-id="GEHyh9bBiFo3sUOHuisSgo">我把我们的照片做成了一本小相册。现在，要不要一起慢慢翻？</p> -->
+        </div>
+        <button class="open-album" id="openAlbum" type="button" data-page-node-id="tJ8iftZZWa3XZKwZWlvSDq">继续</button>
+      </section>
+    </div>
+  </div>
+
+  <main id="albumMain" data-page-node-id="mzKs6DEiQXuGEDvdscnWGs">
+    <section class="album-stage" id="albumStage" aria-label="回忆相册" data-page-node-id="wDbVBCwfWNMoNICTReObal">
+      <div class="book" id="book" data-page-node-id="o9PBEsTXwvBbawgi92VJEj">
+        <figure class="page active" data-index="0" data-page-node-id="aiRlFdiETZVtPZEBeOVnlD"><img src="assets/memory-001.jpg" alt="第1张回忆照片" data-page-node-id="lqqZ0sTNAdpqiVMqiNDRe2"><figcaption data-page-node-id="0EH5bPNTGBf6DGmDZszfQw">第 1 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="1" data-page-node-id="gkpxbdxggXU69GVPIteeZd"><img src="assets/memory-002.jpg" alt="第2张回忆照片" data-page-node-id="q4eaOKXuaP2vVhunyqgST3"><figcaption data-page-node-id="rZjFBAeZLs9tdIiZy4V6a1">第 2 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="2" data-page-node-id="WF8BxPAYfx0tKcqUJK6FmA"><img src="assets/memory-003.jpg" alt="第3张回忆照片" data-page-node-id="CdIaNRPrbbZHmesfsVwHPB"><figcaption data-page-node-id="BdPFnMGm9YAbiJHZ2JbW6P">第 3 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="3" data-page-node-id="lHZNmmwvkXRKFpFQnVDvi5"><img src="assets/memory-006.jpg" alt="第4张回忆照片" data-page-node-id="VImJqRDpOPbAMuJC3fKLiV"><figcaption data-page-node-id="hb5bzYmj3rRXOUPngXnCOz">第 4 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="4" data-page-node-id="YifaJRH99AVmkl6MGpBgXJ"><img src="assets/memory-007.jpg" alt="第5张回忆照片" data-page-node-id="G49NRmKrrYpaSP5ZJh7WnK"><figcaption data-page-node-id="eQxVQSlyGRSEWp68sIMiGc">第 5 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="5" data-page-node-id="10EL02BArc9JZa9fz2IyGG"><img src="assets/memory-010.jpg" alt="第6张回忆照片" data-page-node-id="O4QNAOkH29dwAdFWpIyqra"><figcaption data-page-node-id="lPwLyAzXsXk52Ek5uVX3LB">第 6 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="6" data-page-node-id="eDFaCMCnPWFf34cYm72NXS"><img src="assets/memory-011.jpg" alt="第7张回忆照片" data-page-node-id="8H4kx1amUUSOFWm9I1Wf3w"><figcaption data-page-node-id="45OJjN2LG5q4g9JFMzp4vd">第 7 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="7" data-page-node-id="HRjlnx2eAfIRPqjoaspdQT"><img src="assets/memory-012.jpg" alt="第8张回忆照片" data-page-node-id="L3PsCo1IpED10NOFTh186b"><figcaption data-page-node-id="c104n35kQznmr90obiFf09">第 8 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="8" data-page-node-id="9CBy4nGwlUFyD3aXhuOIqV"><img src="assets/memory-013.jpg" alt="第9张回忆照片" data-page-node-id="wGmwiHjiTMRBcMh3UOZJrO"><figcaption data-page-node-id="orrwVGOS2iXghT5dtgXSCz">第 9 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="9" data-page-node-id="t4bHTo1Kk8KCRFIrYRMUU1"><img src="assets/memory-014.jpg" alt="第10张回忆照片" data-page-node-id="z9RCGXByZYt74F1AKeeIvg"><figcaption data-page-node-id="M3dDRR4JccPHfbkAVmE6S7">第 10 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="10" data-page-node-id="5xLatwgHmspPVjpO7TTbaS"><img src="assets/memory-015.jpg" alt="第11张回忆照片" data-page-node-id="NhNxddaezOa7vGPHY4GoiA"><figcaption data-page-node-id="LAOpM5aQycZeKd5tBDvtlh">第 11 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="11" data-page-node-id="xBFSBxHmlgQG347Toj4SEL"><img src="assets/memory-016.jpg" alt="第12张回忆照片" data-page-node-id="uwL4wx6CP9gXxchGCOBdxY"><figcaption data-page-node-id="BGTzb3rlFC6bcfNtMYJELJ">第 12 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="12" data-page-node-id="XpgBK1unbWCDlfA1Fj5NMi"><img src="assets/memory-019.jpg" alt="第13张回忆照片" data-page-node-id="izvvfVBNBKvDgVnkV1EFuk"><figcaption data-page-node-id="vc3fZx6MT8nY3mQ58cy2db">第 13 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="13" data-page-node-id="Ezyq5WyawkisLIZFVzlmvO"><img src="assets/memory-021.jpg" alt="第14张回忆照片" data-page-node-id="YPUy9uKCdl0RF0ODx7HwY2"><figcaption data-page-node-id="8K4HgQrEH07Ik5MkmWEtLf">第 14 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="14" data-page-node-id="M6ZaOhMGKqBmhTb3th65K2"><img src="assets/memory-022.jpg" alt="第15张回忆照片" data-page-node-id="zLdZ38TgShVhTUrWLjHPYB"><figcaption data-page-node-id="DUVAlaartTqkzHZIrASoLB">第 15 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="15" data-page-node-id="Kw9O1nrNEA6OWwZuwpCWrv"><img src="assets/memory-024.jpg" alt="第16张回忆照片" data-page-node-id="TPMgwrE0dJjSbKPcamBGyU"><figcaption data-page-node-id="hRieKuQSiphmQbCubjgcQX">第 16 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="16" data-page-node-id="A31sWN7fBOXbAABvFLTQkk"><img src="assets/memory-029.jpg" alt="第17张回忆照片" data-page-node-id="pjSC5GSXlyPtHRUaFIdFHl"><figcaption data-page-node-id="RTHe2nRLs5DCNDerUcOFwV">第 17 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="17" data-page-node-id="JUyXxbRxjDrKAO2G1vLXtF"><img src="assets/memory-030.jpg" alt="第18张回忆照片" data-page-node-id="aau3gkC5y03zG7JUrnVlDY"><figcaption data-page-node-id="IuOxvAicBFzkGO3g4VFmE5">第 18 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="18" data-page-node-id="ub5WTIFRfNtyAYsTjEEMLg"><img src="assets/memory-031.jpg" alt="第19张回忆照片" data-page-node-id="smERTBaPRggdVwC8su46jQ"><figcaption data-page-node-id="KpJWouhzOBnH1DMfI0AeUl">第 19 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="19" data-page-node-id="FWhcdSa1D038Bgzw6bcQaQ"><img src="assets/memory-032.jpg" alt="第20张回忆照片" data-page-node-id="GQDNhe2SiEs6A8l1bTDCRI"><figcaption data-page-node-id="i8IJaXSSc4eRB0YFC30KFH">第 20 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="20" data-page-node-id="QLAEx62bZ8Gy2Bp8YlAAcN"><img src="assets/memory-033.jpg" alt="第21张回忆照片" data-page-node-id="nHtrqloy9UvrbtOmu7LDbd"><figcaption data-page-node-id="tMWD67FzmynCYkKVuedMaJ">第 21 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="21" data-page-node-id="swWekwQuyQydgaEAbEhUcf"><img src="assets/memory-034.jpg" alt="第22张回忆照片" data-page-node-id="xyZC1pJkdNHDEx4BwEl4sW"><figcaption data-page-node-id="nK9UHGz3Gni4Z7FuZu90SR">第 22 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="22" data-page-node-id="7JF4zufgDPRVIsM3aG6rnN"><img src="assets/memory-035.jpg" alt="第23张回忆照片" data-page-node-id="lNU9FZsfjIGHls5PMeWt6P"><figcaption data-page-node-id="4OCsCDcWovdQ40n1YeqRV0">第 23 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="23" data-page-node-id="qurlS9hDpSMdJ2Shb3cNI3"><img src="assets/memory-036.jpg" alt="第24张回忆照片" data-page-node-id="26sDHELe6XMyLJs0wc8eHO"><figcaption data-page-node-id="LYzo0ueWLbDOsJTNtCpwI1">第 24 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="24" data-page-node-id="WCSyINTbFSKEfWAqW0Pjt8"><img src="assets/memory-037.jpg" alt="第25张回忆照片" data-page-node-id="VPuCkYfntya7BXggYlEb4A"><figcaption data-page-node-id="nQEg0fpTcssYlQEf4u9arO">第 25 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="25" data-page-node-id="bqes51gs1DCXez9j4or78B"><img src="assets/memory-038.jpg" alt="第26张回忆照片" data-page-node-id="CJSfjfFWN9ctJilPD9x9p4"><figcaption data-page-node-id="AN31pH2lnaanH9Z3Q9LO8g">第 26 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="26" data-page-node-id="p3FTfCL5O0E5rBZawjUba4"><img src="assets/memory-039.jpg" alt="第27张回忆照片" data-page-node-id="gvkHMzqYkKHUmim8vmiHNM"><figcaption data-page-node-id="b1vH5XG1sXR1wqQXSA6SAz">第 27 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="27" data-page-node-id="2Rh8RKNZx9jookqThOMeVL"><img src="assets/memory-041.jpg" alt="第28张回忆照片" data-page-node-id="4thQpVVYYwzt5ICuhdJlcW"><figcaption data-page-node-id="lilKIJ9MSw1G4EZGesjNlG">第 28 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="28" data-page-node-id="eSH9aY5JN42qVMmRRxumGk"><img src="assets/memory-043.jpg" alt="第29张回忆照片" data-page-node-id="K3n5N5lRzfDXkq9E0vHa1b"><figcaption data-page-node-id="eaLxoDUUHg1nPdbq2ehDm0">第 29 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="29" data-page-node-id="WUkvjZkSDSmHLuDmLeelO2"><img src="assets/memory-044.jpg" alt="第30张回忆照片" data-page-node-id="4dhH6PKBU0Lvo8mPwVHDIm"><figcaption data-page-node-id="w79PvpcyKsSfyKGTFwY9hy">第 30 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="30" data-page-node-id="q7WGxj3GTTVNxKO8oLzeVB"><img src="assets/memory-045.jpg" alt="第31张回忆照片" data-page-node-id="gEmAHK4cbhkg77mlWA86CC"><figcaption data-page-node-id="snObA5al15wGdEqDhCSyT3">第 31 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="31" data-page-node-id="7uaQl2lH5lG0WL3clXcbZz"><img src="assets/memory-046.jpg" alt="第32张回忆照片" data-page-node-id="b4yI56hOTVXPn0sWACWG2Y"><figcaption data-page-node-id="CddiUtJkTgA6U6lA1BNr7R">第 32 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="32" data-page-node-id="gBHnM1EnG1aIkb3pvUAK88"><img src="assets/memory-047.jpg" alt="第33张回忆照片" data-page-node-id="PhsCmaB2xJgh7VlUs4aMje"><figcaption data-page-node-id="xCsR4EMewMvk8c9ivKK0eQ">第 33 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="33" data-page-node-id="77pQzLGHNm8MuYMEh7DrMr"><img src="assets/memory-048.jpg" alt="第34张回忆照片" data-page-node-id="XhI3N1BTwITEDWbF9qEv68"><figcaption data-page-node-id="BgXDhRGUxjRS2GD7UoPMjF">第 34 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="34" data-page-node-id="iXYb3CkGyuoGfBSCZOemXJ"><img src="assets/memory-049.jpg" alt="第35张回忆照片" data-page-node-id="wyaWDikKGdFwQbAjrRUsGa"><figcaption data-page-node-id="qK8JE1SDAHUKnFmpJHN3YW">第 35 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="35" data-page-node-id="0716VTsXMUqwrvfU3CKB4j"><img src="assets/memory-050.jpg" alt="第36张回忆照片" data-page-node-id="xJVrWRcbeO1X2Lp7370f4n"><figcaption data-page-node-id="fMtoLKJ80oeyJI7PFvGVeP">第 36 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="36" data-page-node-id="OKbivobwAikZf5L5QRrHlg"><img src="assets/memory-051.jpg" alt="第37张回忆照片" data-page-node-id="OiQtILZN1dpDbmKhtZ5jT3"><figcaption data-page-node-id="xxAUY49eF8WYfeSOpxbEGz">第 37 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="37" data-page-node-id="0RXCDAEQV0y1eoe8kunGWt"><img src="assets/memory-052.jpg" alt="第38张回忆照片" data-page-node-id="0sWCFY1ZsJZz6oNYG8arF1"><figcaption data-page-node-id="8D52TpYdYsMr06YGd11Hkj">第 38 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="38" data-page-node-id="nBfOqtzNzyMa4mj2Tlh6MF"><img src="assets/memory-053.jpg" alt="第39张回忆照片" data-page-node-id="mJyCQqAxV1ppS4zkMgyem8"><figcaption data-page-node-id="gWnQo0QnGZZksEkV8e1c7j">第 39 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="39" data-page-node-id="8o3WHD0RPDzuyHhJa3QxHE"><img src="assets/memory-054.jpg" alt="第40张回忆照片" data-page-node-id="ewm1pTYUg8wEop5Hic4kpA"><figcaption data-page-node-id="cTvxiPYCsIoIGuxCBYsmQ3">第 40 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="40" data-page-node-id="gC9YfAhP0qN9jqxYhzpXC7"><img src="assets/memory-055.jpg" alt="第41张回忆照片" data-page-node-id="CEY6AeHeweCk2PTEYgbzeQ"><figcaption data-page-node-id="pFu9CKUx78jbw6CJFTmX6w">第 41 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="41" data-page-node-id="aqd09qFBoqSUVLDyNRq3uw"><img src="assets/memory-056.jpg" alt="第42张回忆照片" data-page-node-id="mT7f7tFqBEzTrXwycZKdKH"><figcaption data-page-node-id="t7sbXJuvH6hEr6t9JzFXm2">第 42 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="42" data-page-node-id="sfAZVd1oEA9Fb8NEKqzMts"><img src="assets/memory-057.jpg" alt="第43张回忆照片" data-page-node-id="EX91qYJjcUM02de1abuAzp"><figcaption data-page-node-id="XIvXIX516fMGEG3nyI41z0">第 43 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="43" data-page-node-id="ldkEO2PiITrtN3zl2hwkVA"><img src="assets/memory-063.jpg" alt="第44张回忆照片" data-page-node-id="R3lo3kYwXjKKKOivtGsPkM"><figcaption data-page-node-id="X7mrkBMZcqGHzKWIi94UT9">第 44 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="44" data-page-node-id="XcAyAGLtInrHFZ1FjFGZWu"><img src="assets/memory-067.jpg" alt="第45张回忆照片" data-page-node-id="SfxcnXNVPehnCUxOYcrcLs"><figcaption data-page-node-id="vCDmiaWQeer0FjSFd9o2G5">第 45 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="45" data-page-node-id="PCSjRatCKtRgTvaQCUyHMT"><img src="assets/memory-075.jpg" alt="第46张回忆照片" data-page-node-id="rAasYXw91miOuWVIsU6zW3"><figcaption data-page-node-id="8wGW06SzYizgqW8mEARayb">第 46 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="46" data-page-node-id="ZB4q29XSFo6V8L0JXViwHx"><img src="assets/memory-081.jpg" alt="第47张回忆照片" data-page-node-id="0qad9HzvKIGHCJVVHJDn9q"><figcaption data-page-node-id="GjQF3Pfg8Usa2VddZ3LMMJ">第 47 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="47" data-page-node-id="G52bpeS4IWULkhOhm339yH"><img src="assets/memory-082.jpg" alt="第48张回忆照片" data-page-node-id="XhFX1t6EnIYEHIjvGH4Cx2"><figcaption data-page-node-id="1Ay3gdp0tzOvy9mzi6KGvC">第 48 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="48" data-page-node-id="AKTrZbL3uozAYCXRki6LgE"><img src="assets/memory-083.jpg" alt="第49张回忆照片" data-page-node-id="itciK2hAtqnclD9gQyg5w0"><figcaption data-page-node-id="9wziQ0TPw88mvOelwSzhh8">第 49 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="49" data-page-node-id="lQCJyxSQCUdhnxrzvO03b6"><img src="assets/memory-087.jpg" alt="第50张回忆照片" data-page-node-id="btJtrwrDoL0p9NSlmlTVTf"><figcaption data-page-node-id="X1Ac122crXccLL7TSOrAyV">第 50 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="50" data-page-node-id="qyvRCCgpbSCjHyTG3nAfK5"><img src="assets/memory-088.jpg" alt="第51张回忆照片" data-page-node-id="HzFlvbH4f3jF8rKisEhzx3"><figcaption data-page-node-id="YJD8PFipFNuP0MwQYJTa1Z">第 51 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="51" data-page-node-id="WWoywIKOFmc7WfU2ytQkEb"><img src="assets/memory-089.jpg" alt="第52张回忆照片" data-page-node-id="oHR9qtsBtoPppVTcmELsUL"><figcaption data-page-node-id="lpgn7FcHw4UmNPDK3cElFb">第 52 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="52" data-page-node-id="keeXfvmv6oBXrjCOPm9VGT"><img src="assets/memory-090.jpg" alt="第53张回忆照片" data-page-node-id="TvnsPTIsZevLlQyREmU53D"><figcaption data-page-node-id="EcRt5Yc45r9Yr8CbTFAAUK">第 53 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="53" data-page-node-id="DjwoEl4IEODNaO0ueAYFrK"><img src="assets/memory-091.jpg" alt="第54张回忆照片" data-page-node-id="Gx58u5YBudye9GNqOy5BC2"><figcaption data-page-node-id="8gkoemExMGHijj9f8zbGNg">第 54 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="54" data-page-node-id="Je5Vw4gyri3YLL8qfKX9ns"><img src="assets/memory-092.jpg" alt="第55张回忆照片" data-page-node-id="GgOLSXgoyMAkUBIUMcLPFt"><figcaption data-page-node-id="0oTKcTX1Q3SH51M0jWvGrF">第 55 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="55" data-page-node-id="4yMOZOJjvbpY1bw7vPuu3d"><img src="assets/memory-094.jpg" alt="第56张回忆照片" data-page-node-id="OxOgw2bhWXaudxHbpst3Ws"><figcaption data-page-node-id="FT4gsXi7yAGO8AFEqsbVfK">第 56 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="56" data-page-node-id="czv71Kt9ETEVB17xEeRR1z"><img src="assets/memory-095.jpg" alt="第57张回忆照片" data-page-node-id="UcjThH12yKKGaxFwcY7QCH"><figcaption data-page-node-id="aEJtLtofhicZkYHtoiUm6D">第 57 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="57" data-page-node-id="vfUlsrIFvIgGivRzZyqim9"><img src="assets/memory-097.jpg" alt="第58张回忆照片" data-page-node-id="ZqmHD4d9xJ5yKD0SDkEF1E"><figcaption data-page-node-id="eKPpcTNI21GcjSFTv808Wf">第 58 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="58" data-page-node-id="rCNM0TaNruxzeHU3phytvx"><img src="assets/memory-119.jpg" alt="第59张回忆照片" data-page-node-id="2FGxv4Bn3GBpcC8wESXrMP"><figcaption data-page-node-id="ZUweLbI0tO3whTsjFbhyR9">第 59 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="59" data-page-node-id="nEm6w2jIL2CvzFrwktLlB0"><img src="assets/memory-120.jpg" alt="第60张回忆照片" data-page-node-id="heOtQ4SMtANg0HnMuzgK8q"><figcaption data-page-node-id="4nnTh6WaLWzUBAFbxJUFAl">第 60 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="60" data-page-node-id="IQVgDLxOjmwvI9lIprZaVk"><img src="assets/memory-121.jpg" alt="第61张回忆照片" data-page-node-id="DKOK7TyQ9FGkSR11Vlyuav"><figcaption data-page-node-id="FMjmqlhEh690bDAgz9X7Ha">第 61 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="61" data-page-node-id="oFJgfQBGupiVKxi8PPC7xK"><img src="assets/memory-122.jpg" alt="第62张回忆照片" data-page-node-id="LbOFNvGxjeH54dcrkmhIe7"><figcaption data-page-node-id="SwhEfdooEMExiFGxFzwcGP">第 62 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="62" data-page-node-id="m7Hy9fbIDHbXnrVWZB3Xwi"><img src="assets/memory-123.jpg" alt="第63张回忆照片" data-page-node-id="58MMOgBRDs8MVaLeN8tTVN"><figcaption data-page-node-id="YtFRidcrtyPg4XjmrH1yNy">第 63 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="63" data-page-node-id="LGf2nFDludhP9QAnCdS1kh"><img src="assets/memory-125.jpg" alt="第64张回忆照片" data-page-node-id="ICRJsiKpdgHQlyWGCmHQUr"><figcaption data-page-node-id="sAaUWOtjE61GrfUnrIyhnB">第 64 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="64" data-page-node-id="2UEOnl2E5hMYoEXpdcSCCI"><img src="assets/memory-126.jpg" alt="第65张回忆照片" data-page-node-id="t2YqjWUmaSkMg8k2SOUzdS"><figcaption data-page-node-id="6bOR8mvJ40468JcUlM2hfi">第 65 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="65" data-page-node-id="KkcEoUnHb9K8By1fYwwMok"><img src="assets/memory-127.jpg" alt="第66张回忆照片" data-page-node-id="CFrbPriZ5h4F9JbQhBdc3A"><figcaption data-page-node-id="5BitzH8pjFwVcCz66wph56">第 66 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="66" data-page-node-id="DGs5eUe0Qt9cAGe5KwW9YG"><img src="assets/memory-129.jpg" alt="第67张回忆照片" data-page-node-id="24YxEV2Q4NOyUfXfVTULIO"><figcaption data-page-node-id="4H0HCRFuBcGDpHXNCprKfY">第 67 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="67" data-page-node-id="P7ng9HxnrNZgQybIEkWnMv"><img src="assets/memory-130.jpg" alt="第68张回忆照片" data-page-node-id="EgpCHcEHueKqCghnVPIIaH"><figcaption data-page-node-id="sKqhcK0xcOWIjBkU2Rhj4M">第 68 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="68" data-page-node-id="SwoefQ8vMfQZ0Y6oWap7db"><img src="assets/memory-131.jpg" alt="第69张回忆照片" data-page-node-id="yCgmR98afbOXPKiORnFHL8"><figcaption data-page-node-id="S6rHqaCYeS5i6DjBPwUBEg">第 69 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="69" data-page-node-id="w885h2jc8FMItUN2N0UBTo"><img src="assets/memory-136.jpg" alt="第70张回忆照片" data-page-node-id="JdOFPy2Zzs8Q7KQ9qre3PV"><figcaption data-page-node-id="rI8KVIAPkO2yuDgaZCYhc4">第 70 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="70" data-page-node-id="xwNsqpZslZW76KIWkygSls"><img src="assets/memory-138.jpg" alt="第71张回忆照片" data-page-node-id="vhxHNcWuT5hprtObw6ZHFS"><figcaption data-page-node-id="PtDU6xZnZOrVIHZ2GahVfD">第 71 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="71" data-page-node-id="dFKgRp0Uf7S6VGt2dZhZty"><img src="assets/memory-143.jpg" alt="第72张回忆照片" data-page-node-id="60ChB22x5c5xtWSclFunWg"><figcaption data-page-node-id="4UYsoaomCZHjbiKxIBsMyh">第 72 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="72" data-page-node-id="Z2tf2qD3lDeD2rtXuBnh6H"><img src="assets/memory-173.jpg" alt="第73张回忆照片" data-page-node-id="bEhtFA4yJ1TuGlrGcbVQ2r"><figcaption data-page-node-id="rhrGUaxQXf3XfI33f8R5Jl">第 73 张 / 共 74 张</figcaption></figure>
+<figure class="page" data-index="73" data-page-node-id="TsMVrj5P4wHQWqdanVjNMj"><img src="assets/memory-174.jpg" alt="第74张回忆照片" data-page-node-id="De1oDXrNxL1EcGUKer3sxL"><figcaption data-page-node-id="icGy8b7kzQ9N7v4hsUitXX">第 74 张 / 共 74 张</figcaption></figure>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bgm" src="assets/birthday-music.wav" loop preload="auto" data-page-node-id="4MWF2mMAVLMOTXrBZOB9ie"></audio>
+
+  <!-- ★ 视频播放区：把两个视频放到 assets 文件夹，命名为 video-1.mp4 和 video-2.mp4 即可 -->
+  <div class="video-stage" id="videoStage" aria-label="纪念视频">
+    <video id="video1" src="assets/video1.mp4" playsinline webkit-playsinline x5-playsinline preload="auto"></video>
+    <!-- <video id="video2" src="assets/video-2.mp4" playsinline preload="auto"></video> -->
+  </div>
+
+  <div class="ending" id="ending" role="dialog" aria-modal="true" aria-label="相册结尾" data-page-node-id="dOPmzgziQPXg5iLJcA6DKl">
+    <div class="ending-card" data-page-node-id="XtQ4GWiCQKNefxhZTKwXmQ">
+      <button class="ending-close" id="closeEnding" type="button" aria-label="关闭">×</button>
+      <h3 data-page-node-id="TUBoIJUAkiOoTaoMKP8GrD">天若有情亦无情，爱到最后是分离</h3>
+      <h5 data-page-node-id="6gsIda07uc2rwyZDO18b2u">祝全世界最好的吴汶沁生日快乐！</h5>
+    </div>
+  </div>
+
+  <script>
+    const opening = document.getElementById('opening');
+    const cakeWrap = document.getElementById('cakeWrap');
+    const countdown = document.getElementById('countdown');
+    const title = document.getElementById('birthdayTitle');
+    const sub = document.getElementById('birthdaySub');
+    const messageCard = document.getElementById('messageCard');
+    const flames = Array.from(document.querySelectorAll('.flame'));
+    const smokes = Array.from(document.querySelectorAll('.smoke'));
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timers = [];
+    function later(fn, ms) { timers.push(setTimeout(fn, reduceMotion ? Math.min(ms, 80) : ms)); }
+
+    later(() => cakeWrap.classList.add('show'), 250);
+    [1100, 1450, 1800].forEach((ms, i) => later(() => flames[i].classList.add('lit'), ms));
+    [2850, 3850, 4850].forEach((ms, i) => later(() => {
+      flames[i].classList.remove('lit');
+      flames[i].classList.add('out');
+      smokes[i].classList.add('show');
+      countdown.textContent = String(3 - i - 1);
+    }, ms));
+    later(() => { countdown.textContent = '愿'; cakeWrap.classList.add('done'); title.classList.add('show'); }, 5650);
+    later(() => sub.classList.add('show'), 6500);
+    later(() => messageCard.classList.add('show'), 9500);
+
+    const pages = Array.from(document.querySelectorAll('.page'));
+    const ending = document.getElementById('ending');
+    const bgm = document.getElementById('bgm');
+    const videoStage = document.getElementById('videoStage');
+    const videos = [document.getElementById('video1'), document.getElementById('video2')];
+    const AUTO_DELAY = reduceMotion ? 450 : 500;
+    let current = 0;
+    let locked = false;
+    let autoPlaying = true;
+    let autoTimer = null;
+    let videosStarted = false;
+    const pageImgs = pages.map(p => p.querySelector('img'));
+    // 内存优化：默认不加载 74 张图，仅在需要时按需加载窗口内的图片，
+    // 远离当前页的图片会释放 src 以回收内存，避免手机端内存峰值导致页面重载。
+    const WINDOW_AHEAD = 4;
+    const WINDOW_BEHIND = 2;
+    const KEEP_RANGE = 6;
+    pageImgs.forEach((im) => {
+      if (im && !im.dataset.src) {
+        im.dataset.src = im.getAttribute('src');
+        im.removeAttribute('src');
+      }
+    });
+    function loadImg(i) {
+      const im = pageImgs[i];
+      if (!im || im.dataset.loaded) return;
+      if (im.dataset.src) { im.src = im.dataset.src; im.dataset.loaded = '1'; }
+    }
+    function loadWindow(center) {
+      for (let i = center - WINDOW_BEHIND; i <= center + WINDOW_AHEAD; i++) loadImg(i);
+    }
+    function trimMemory(center) {
+      pageImgs.forEach((im, i) => {
+        if (im && im.dataset.loaded && Math.abs(i - center) > KEEP_RANGE) {
+          im.removeAttribute('src');
+          delete im.dataset.loaded;
+        }
+      });
+    }
+
+    document.getElementById('openAlbum').addEventListener('click', () => {
+      opening.classList.add('leaving');
+      bgm.volume = .34;
+      bgm.play().catch(() => {});
+      loadWindow(0);
+      later(() => {
+        opening.style.display = 'none';
+        document.getElementById('albumMain').style.display = 'block';
+        document.getElementById('albumStage').classList.add('show');
+        loadWindow(0);
+        scheduleAuto();
+      }, 700);
+    });
+
+    function clearAuto() {
+      if (autoTimer) clearTimeout(autoTimer);
+      autoTimer = null;
+    }
+    function showEnding() {
+      autoPlaying = false;
+      clearAuto();
+      ending.classList.add('show');
+    }
+    function scheduleAuto() {
+      clearAuto();
+      if (!autoPlaying) return;
+      if (current === pages.length - 1) {
+        autoTimer = setTimeout(startVideos, AUTO_DELAY);
+      } else {
+        autoTimer = setTimeout(() => turnPage(1), AUTO_DELAY);
+      }
+    }
+    // ★ 照片播完后：依次播放 assets/video-1.mp4 → assets/video-2.mp4，然后弹出结尾卡片
+    function startVideos() {
+      if (videosStarted) return;
+      videosStarted = true;
+      autoPlaying = false;
+      clearAuto();
+      // 进视频前释放所有照片内存，降低视频阶段内存峰值
+      pageImgs.forEach((im) => { if (im && im.dataset.loaded) { im.removeAttribute('src'); delete im.dataset.loaded; } });
+      const bgmWasPlaying = !bgm.paused;
+      bgm.pause();
+      videoStage.classList.add('show');
+      playVideo(0, () => {
+        videoStage.classList.remove('show');
+        if (bgmWasPlaying) bgm.play().catch(() => {});
+        showEnding();
+      });
+    }
+    function playVideo(i, done) {
+      const video = videos[i];
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        video.classList.remove('playing');
+        video.pause();
+        done();
+      };
+      video.addEventListener('ended', finish);
+      video.addEventListener('error', finish);
+      video.classList.add('playing');
+      video.currentTime = 0;
+      video.play().catch(finish);
+    }
+    function randBetween(a, b) { return a + Math.random() * (b - a); }
+    function flipParams() {
+      const horizontal = Math.random() < 0.6;
+      const sx = Math.random() < 0.5 ? -1 : 1;
+      const sy = Math.random() < 0.5 ? -1 : 1;
+      const ry = horizontal ? sx * randBetween(52, 82) : sx * randBetween(18, 46);
+      const rx = horizontal ? sy * randBetween(8, 30) : sy * randBetween(55, 82);
+      const rz = randBetween(-14, 14);
+      const tx = sx * randBetween(58, 90);
+      const ty = sy * randBetween(0, 30);
+      return { rx, ry, rz, tx, ty };
+    }
+    function turnPage(direction) {
+      if (locked || videosStarted) return;
+      const nextIndex = current + direction;
+      if (nextIndex < 0) return;
+      if (nextIndex >= pages.length) { startVideos(); return; }
+      locked = true;
+      const oldPage = pages[current];
+      const newPage = pages[nextIndex];
+      const p = flipParams();
+      const dur = reduceMotion ? 0 : 300;
+      const ease = 'cubic-bezier(.22,1,.36,1)';
+      const out = `translate(${-p.tx}%, ${-p.ty}%) rotateX(${-p.rx}deg) rotateY(${-p.ry}deg) rotateZ(${-p.rz}deg)`;
+      const inStart = `translate(${p.tx}%, ${p.ty}%) rotateX(${p.rx}deg) rotateY(${p.ry}deg) rotateZ(${p.rz}deg)`;
+      newPage.style.transition = 'none';
+      newPage.style.visibility = 'visible';
+      newPage.style.opacity = '0';
+      newPage.style.transform = inStart;
+      newPage.classList.add('active');
+      void newPage.offsetWidth;
+      requestAnimationFrame(() => {
+        oldPage.style.transition = `transform ${dur}ms ${ease}, opacity ${dur}ms ease`;
+        newPage.style.transition = `transform ${dur}ms ${ease}, opacity ${dur}ms ease`;
+        oldPage.style.opacity = '0';
+        oldPage.style.transform = out;
+        newPage.style.opacity = '1';
+        newPage.style.transform = 'none';
+      });
+      current = nextIndex;
+      loadWindow(current);
+      trimMemory(current);
+      setTimeout(() => {
+        oldPage.classList.remove('active');
+        ['transition', 'visibility', 'opacity', 'transform'].forEach(k => { oldPage.style[k] = ''; });
+        ['transition', 'opacity', 'transform'].forEach(k => { newPage.style[k] = ''; });
+        locked = false;
+        if (autoPlaying) scheduleAuto();
+      }, reduceMotion ? 20 : 330);
+    }
+    function goTo(index) {
+      pages.forEach((pg, i) => { if (i !== index) pg.classList.remove('active'); });
+      current = index;
+      pages[current].classList.add('active');
+    }
+    document.addEventListener('keydown', (event) => {
+      if (opening.style.display === 'none' && !videosStarted) {
+        if (event.key === 'ArrowLeft') turnPage(-1);
+        if (event.key === 'ArrowRight') turnPage(1);
+      }
+    });
+    document.getElementById('closeEnding').addEventListener('click', () => { ending.classList.remove('show'); });
+  </script>
+</body>
+</html>
